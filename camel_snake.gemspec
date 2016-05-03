@@ -6,7 +6,7 @@ require "version"
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "camel_snake_keys"
-  s.version     = CamelSnake::VERSION
+  s.version     = CamelSnakeKeys::VERSION
   s.authors     = ["Josh Buermann"]
   s.email       = ["buermann@gmail.com"]
   s.homepage    = "https://github.com/buermann/camel_snake_keys"
