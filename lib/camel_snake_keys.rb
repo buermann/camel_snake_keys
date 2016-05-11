@@ -1,5 +1,6 @@
 require 'active_support/core_ext/hash'
 require 'active_support/core_ext/string/inflections'
+require 'hashie/mash'
 
 module CamelSnakeKeys
   class << self
@@ -26,11 +27,15 @@ module CamelSnakeKeys
     def snake_keys(data, indifference=false)
       if data.kind_of? Array
         data.map { |v| snake_keys(v) }
-      elsif data.kind_of? HashWithIndifferentAccess || (data.kind_of? Hash && indifference)
-        HashWithIndifferentAccess[data.map {|k, v| [if_underscore(k), snake_keys(v)] }]
       elsif data.kind_of? Hash
-        Hash[data.map {|k, v| [if_underscore(k), snake_keys(v)]
-        }]
+        hash = Hash[data.map {|k, v| [if_underscore(k), snake_keys(v)] }]
+        if data.kind_of? Hashie::Mash
+          Hashie::Mash.new( hash )
+        elsif data.kind_of? HashWithIndifferentAccess || indifference
+          HashWithIndifferentAccess.new( hash )
+        else
+          hash
+        end
       else
         data
       end
@@ -39,10 +44,15 @@ module CamelSnakeKeys
     def camel_keys(data, indifference=false)
       if data.kind_of? Array
         data.map { |v| camel_keys(v) }
-      elsif data.kind_of? HashWithIndifferentAccess || (data.kind_of? Hash && indifference)
-        HashWithIndifferentAccess[data.map {|k, v| [if_camelize(k), camel_keys(v)] }]
-      elsif data.kind_of?(Hash)
-        Hash[data.map {|k, v| [if_camelize(k), camel_keys(v)] }]
+      elsif data.kind_of? Hash
+        hash = Hash[data.map {|k, v| [if_camelize(k), camel_keys(v)] }]
+        if data.kind_of? Hashie::Mash
+          Hashie::Mash.new( hash )
+        elsif data.kind_of? HashWithIndifferentAccess || indifference
+          HashWithIndifferentAccess.new( hash )
+        else
+          hash
+        end
       else
         data
       end

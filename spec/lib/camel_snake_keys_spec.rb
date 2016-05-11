@@ -39,4 +39,18 @@ RSpec.describe Enumerable do
     end
   end
 
+  context "mashes" do 
+    let(:snaked) { Hashie::Mash.new({1.2=>1, 1=>1.2, nil=>2, :foo_bar=>1, "dark_matter"=>[{:dark_energy=>"aBc", "baz_qux"=>"Frob."}]}) }
+    let(:camelized) { Hashie::Mash.new({ 1.2=>1, 1=>1.2, nil=>2, :foo_bar=>1, "dark_matter"=>[{:dark_energy=>"aBc", "baz_qux"=>"Frob."}]}) }
+
+    it "should snake case keys of hashes" do
+      camelized.with_snake_keys.should eq snaked
+    end
+
+    it "should camel case keys of hashes" do
+      snaked.with_snake_keys.should eq camelized
+    end
+ 
+  end
+
 end

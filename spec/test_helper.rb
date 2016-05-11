@@ -1,3 +1,5 @@
+require 'coveralls'
+Coveralls.wear!
 require 'camel_snake_keys'
 
 RSpec.configure do |config|
