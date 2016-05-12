@@ -18,10 +18,12 @@ RSpec.describe Enumerable do
     let(:snaked) { {false=>true, 1=>1.2, 1.2=>1, nil=>2, :foo_bar=>1, "dark_matter"=>[{:dark_energy=>"aBc", "baz_qux"=>"Frob."}]} }
     let(:camelized) { {false=>true, 1=>1.2, 1.2=>1, nil=>2, :foo_bar=>1, "dark_matter"=>[{:dark_energy=>"aBc", "baz_qux"=>"Frob."}]} }
     it "should snake case keys of hashes" do
+      camelized.with_snake_keys.class.should == Hash
       camelized.with_snake_keys.should eq snaked
     end
 
     it "should camel case keys of hashes" do
+      snaked.with_snake_keys.class.should == Hash
       snaked.with_snake_keys.should eq camelized
     end
   end
@@ -31,10 +33,12 @@ RSpec.describe Enumerable do
     let(:camelized) { { 1.2=>1, 1=>1.2, nil=>2, :foo_bar=>1, "dark_matter"=>[{:dark_energy=>"aBc", "baz_qux"=>"Frob."}]}.with_indifferent_access }
 
     it "should snake case keys of hashes" do
+      camelized.with_snake_keys.class.should == HashWithIndifferentAccess
       camelized.with_snake_keys.should eq snaked
     end
 
     it "should camel case keys of hashes" do
+      snaked.with_snake_keys.class.should == HashWithIndifferentAccess
       snaked.with_snake_keys.should eq camelized
     end
   end
@@ -44,10 +48,12 @@ RSpec.describe Enumerable do
     let(:camelized) { Hashie::Mash.new({ 1.2=>1, 1=>1.2, nil=>2, :foo_bar=>1, "dark_matter"=>[{:dark_energy=>"aBc", "baz_qux"=>"Frob."}]}) }
 
     it "should snake case keys of hashes" do
+      camelized.with_snake_keys.class.should == Hashie::Mash
       camelized.with_snake_keys.should eq snaked
     end
 
     it "should camel case keys of hashes" do
+      snaked.with_snake_keys.class.should == Hashie::Mash
       snaked.with_snake_keys.should eq camelized
     end
  
