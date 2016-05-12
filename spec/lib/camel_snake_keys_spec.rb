@@ -13,6 +13,7 @@ RSpec.describe Enumerable do
     it "should camel case keys of hashes" do
       snaked.with_camel_keys.should eq camelized
     end
+
   end
 
   context "hashes" do
@@ -29,6 +30,20 @@ RSpec.describe Enumerable do
       hash = snaked.with_camel_keys
       hash.class.should == Hash
       hash.should eq camelized
+    end
+
+    it "should preserve symbol keys" do 
+      camelized.with_snake_keys[:foo_bar].should_not be_nil
+      camelized.with_snake_keys['foo_bar'].should be_nil
+      snaked.with_camel_keys[:fooBar].should be_present
+      snaked.with_camel_keys['fooBar'].should be_nil
+    end
+
+    it "should preserve string keys" do 
+      camelized.with_snake_keys['dark_matter'].should be_present
+      camelized.with_snake_keys[:dark_matter].should be_nil
+      snaked.with_camel_keys['darkMatter'].should be_present
+      snaked.with_camel_keys[:darkMatter].should be_nil
     end
 
     it "should snake case keys of hashes with indifference" do
