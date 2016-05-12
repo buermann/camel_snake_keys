@@ -29,6 +29,7 @@ module CamelSnakeKeys
         data.map { |v| snake_keys(v) }
       elsif data.kind_of? Hash
         hash = Hash[data.map {|k, v| [if_underscore(k), snake_keys(v)] }]
+        hash = hash.with_indifferent_access if indifference
         data.class == Hash ? hash : data.class.new(hash)
       else
         data
@@ -40,6 +41,7 @@ module CamelSnakeKeys
         data.map { |v| camel_keys(v) }
       elsif data.kind_of? Hash
         hash = Hash[data.map {|k, v| [if_camelize(k), camel_keys(v)] }]
+        hash = hash.with_indifferent_access if indifference
         data.class == Hash ? hash : data.class.new(hash)
       else
         data
