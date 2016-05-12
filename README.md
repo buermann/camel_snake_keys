@@ -17,11 +17,11 @@
 [CS img]: https://coveralls.io/repos/buermann/camel_snake_keys/badge.png?branch=master
 
 
-Add recursive with_snake_keys and with_camel_keys to Enumerable without converting everything into a string.
+Add recursive with_snake_keys and with_camel_keys to Enumerable, preserve strings and symbols in hashes, and treat hash descendents like ActiveSupport::HashWithIndifferentAccess and Hashie::Mash agnostically.
 
 ## Documentation
 
-Add gem 'camel_snake_keys' to your gemfile or gem install camel_snake_keys.
+Add `gem 'camel_snake_keys'` to your Gemfile or gem install camel_snake_keys.
 
 Enumerables will be monkey patched the following methods:
 
