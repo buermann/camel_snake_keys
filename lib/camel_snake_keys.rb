@@ -1,6 +1,5 @@
 require 'active_support/core_ext/hash'
 require 'active_support/core_ext/string/inflections'
-require 'hashie/mash'
 
 module CamelSnakeKeys
   class << self

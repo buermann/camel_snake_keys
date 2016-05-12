@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'hashie/mash'
 
 RSpec.describe Enumerable do
 
