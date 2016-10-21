@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- spec/*`.split("\n")
 
   s.required_ruby_version = '~> 2.0'
-  s.add_dependency "activesupport"
+  s.add_dependency "activesupport", '<= 5.0' 
 
   s.add_development_dependency "rspec-rails", '>= 3.0'
 end
