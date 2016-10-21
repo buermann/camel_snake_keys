@@ -23,13 +23,13 @@ RSpec.describe Enumerable do
 
     it "should snake case keys of hashes" do
       hash = camelized.with_snake_keys
-      hash.class.should == Hash
+      hash.class.should eq Hash
       hash.should eq snaked
     end
 
     it "should camel case keys of hashes" do
       hash = snaked.with_camel_keys
-      hash.class.should == Hash
+      hash.class.should eq Hash
       hash.should eq camelized
     end
 
@@ -49,14 +49,14 @@ RSpec.describe Enumerable do
 
     it "should snake case keys of hashes with indifference" do
       hash = camelized.with_snake_keys(true)
-      hash.class.should == HashWithIndifferentAccess
+      hash.class.should eq HashWithIndifferentAccess
       hash.should eq snaked.with_indifferent_access
       hash[:foo_bar].should eq hash["foo_bar"]
     end
 
     it "should camel case keys of hashes with indifference" do
       hash = snaked.with_camel_keys(true)
-      hash.class.should == HashWithIndifferentAccess
+      hash.class.should eq HashWithIndifferentAccess
       hash.should eq camelized.with_indifferent_access
       hash["fooBar"].should eq hash[:fooBar]
     end
@@ -69,25 +69,25 @@ RSpec.describe Enumerable do
 
     it "should snake case keys of hashes" do
       hash = camelized.with_snake_keys
-      hash.class.should == HashWithIndifferentAccess
+      hash.class.should eq HashWithIndifferentAccess
       hash.should eq snaked
     end
 
     it "should camel case keys of hashes" do
       hash = snaked.with_camel_keys
-      hash.class.should == HashWithIndifferentAccess
+      hash.class.should eq HashWithIndifferentAccess
       hash.should eq camelized
     end
 
     it "should snake case keys of hashes with indifference" do
       hash = camelized.with_snake_keys(true)
-      hash.class.should == HashWithIndifferentAccess
+      hash.class.should eq HashWithIndifferentAccess
       hash.should eq snaked
     end
 
     it "should camel case keys of hashes with indifference" do
       hash = snaked.with_camel_keys(true)
-      hash.class.should == HashWithIndifferentAccess
+      hash.class.should eq HashWithIndifferentAccess
       hash.should eq camelized
     end
 
@@ -99,32 +99,51 @@ RSpec.describe Enumerable do
 
     it "should snake case keys of hashes" do
       hash = camelized.with_snake_keys
-      hash.class.should == Hashie::Mash
+      hash.class.should eq Hashie::Mash
       hash.should eq snaked
-      hash["fooBar"].should == hash[:fooBar]
+      hash["fooBar"].should eq hash[:fooBar]
     end
 
     it "should camel case keys of hashes" do
       hash = snaked.with_camel_keys
-      hash.class.should == Hashie::Mash
+      hash.class.should eq Hashie::Mash
       hash.should eq camelized
-      hash["foo_bar"].should == hash[:foo_bar]
+      hash["foo_bar"].should eq hash[:foo_bar]
     end
  
     it "should snake case keys of hashes with redundant indifference" do
       hash = camelized.with_snake_keys(true)
-      hash.class.should == Hashie::Mash
+      hash.class.should eq Hashie::Mash
       hash.should eq snaked
-      hash["foo_bar"].should == hash[:foo_bar]
+      hash["foo_bar"].should eq hash[:foo_bar]
     end
 
     it "should camel case keys of hashes with redundant indifference" do
       hash = snaked.with_camel_keys(true)
-      hash.class.should == Hashie::Mash
+      hash.class.should eq Hashie::Mash
       hash.should eq camelized
-      hash["foo_bar"].should == hash[:foo_bar]
+      hash["foo_bar"].should eq hash[:foo_bar]
     end
  
   end
 
+  context "hash merge conflicts should be resolved predictably" do
+    it "should give camel case key values priority when snake casing" do
+      hash   = { foo_bar: 1, fooBar: 2 }
+      result = { foo_bar: 2 }
+      hash.with_snake_keys.should eq result
+
+      hash = { fooBar: 2, foo_bar: 1 }
+      hash.with_snake_keys.should eq result
+    end
+
+    it "should give snake case key values priority when camel casing" do
+      hash   = { foo_bar: 1, fooBar: 2 }
+      result = { fooBar: 1 }
+      hash.with_camel_keys.should eq result
+
+      hash = { fooBar: 2, foo_bar: 1 }
+      hash.with_camel_keys.should eq result
+    end
+  end
 end
