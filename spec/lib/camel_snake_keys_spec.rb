@@ -1,6 +1,8 @@
 require 'test_helper'
 require 'hashie/mash'
 
+using CamelSnakeKeys
+
 RSpec.describe Enumerable do
 
   context "arrays" do
