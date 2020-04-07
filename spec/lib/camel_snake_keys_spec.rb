@@ -148,4 +148,31 @@ RSpec.describe Enumerable do
       hash.with_camel_keys.should eq result
     end
   end
+
+  context "it should pass indifference down deeply nested structures" do
+    it "camelizing an array of hashes" do
+      camelized = [ a: { b: [{c: :d}] } ].with_camel_keys(true)
+      camelized.first[:a].kind_of?(HashWithIndifferentAccess).should be_truthy
+      camelized.first[:a][:b].first.kind_of?(HashWithIndifferentAccess).should be_truthy
+    end
+
+    it "cazemlizing a hashes of arrays" do
+      camelized = { a: [{b: {c: :d}}]}.with_camel_keys(true)
+      camelized.kind_of?(HashWithIndifferentAccess).should be_truthy
+      camelized[:a].first[:b].kind_of?(HashWithIndifferentAccess).should be_truthy
+    end
+
+    it "snaking an array of hashes" do
+      snaked = [ a: { b: [{c: :d}] } ].with_snake_keys(true)
+      snaked.first[:a].kind_of?(HashWithIndifferentAccess).should be_truthy
+      snaked.first[:a][:b].first.kind_of?(HashWithIndifferentAccess).should be_truthy
+    end
+
+    it "snaking a hashes of arrays" do
+      snaked = { a: [{b: {c: :d}}]}.with_snake_keys(true)
+      snaked.kind_of?(HashWithIndifferentAccess).should be_truthy
+      snaked[:a].first[:b].kind_of?(HashWithIndifferentAccess).should be_truthy
+    end
+
+  end
 end
