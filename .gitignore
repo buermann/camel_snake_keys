@@ -3,3 +3,4 @@ coverage/
 log/*.log
 Gemfile.lock
 pkg/
+.DS_Store

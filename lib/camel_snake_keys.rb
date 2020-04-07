@@ -37,9 +37,9 @@ module CamelSnakeKeys
 
     def snake_keys(data, indifference=false)
       if data.kind_of? Array
-        data.map { |v| snake_keys(v) }
+        data.map { |v| snake_keys(v, indifference) }
       elsif data.kind_of? Hash
-        hash = Hash[data.sort_by {|k,_v| k =~ /_/ ? 0 : 1 }.map {|k, v| [if_underscore(k), snake_keys(v)] }]
+        hash = Hash[data.sort_by {|k,_v| k =~ /_/ ? 0 : 1 }.map {|k, v| [if_underscore(k), snake_keys(v, indifference)] }]
         hash = hash.with_indifferent_access if indifference
         data.class == Hash ? hash : data.class.new(hash)
       else
@@ -49,9 +49,9 @@ module CamelSnakeKeys
 
     def camel_keys(data, indifference=false)
       if data.kind_of? Array
-        data.map { |v| camel_keys(v) }
+        data.map { |v| camel_keys(v, indifference) }
       elsif data.kind_of? Hash
-        hash = Hash[data.sort_by {|k,_v| k =~ /_/ ? 1 : 0 }.map {|k, v| [if_camelize(k), camel_keys(v)] }]
+        hash = Hash[data.sort_by {|k,_v| k =~ /_/ ? 1 : 0 }.map {|k, v| [if_camelize(k), camel_keys(v, indifference)] }]
         hash = hash.with_indifferent_access if indifference
         data.class == Hash ? hash : data.class.new(hash)
       else
