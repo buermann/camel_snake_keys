@@ -12,18 +12,8 @@ rvm:
   - 2.5.0
   - ruby-head
   - jruby-head
-gemfile:
-  - gemfiles/Gemfile.rails.5.0.1
-  - gemfiles/Gemfile.rails.5.1.0
-  - gemfiles/Gemfile.rails.5.2.0
-  - gemfiles/Gemfile.rails.master
 
 matrix:
-  exclude:
-    - rvm: jruby-9.0.4.0
-      gemfile: gemfiles/Gemfile.rails.5.0.1
-    - rvm: jruby-9.0.4.0
-      gemfile: gemfiles/Gemfile.rails.master
   allow_failures:
     - rvm: ruby-head
     - rvm: jruby-head
