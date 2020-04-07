@@ -8,12 +8,10 @@
 [Gem Version]: https://rubygems.org/gems/camel_snake_keys
 [Build Status]: https://travis-ci.org/buermann/camel_snake_keys
 [travis pull requests]: https://travis-ci.org/buermann/camel_snake_keys/pull_requests
-[Dependency Status]: https://gemnasium.com/buermann/camel_snake_keys
 [Coverage Status]: https://coveralls.io/r/buermann/camel_snake_keys
 
 [GV img]: https://badge.fury.io/rb/camel_snake_keys.png
 [BS img]: https://travis-ci.org/buermann/camel_snake_keys.png
-[DS img]: https://gemnasium.com/buermann/camel_snake_keys.png
 [CS img]: https://coveralls.io/repos/buermann/camel_snake_keys/badge.png?branch=master
 
 
