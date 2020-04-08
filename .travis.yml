@@ -1,6 +1,7 @@
 language: ruby
 before_install:
   - gem install bundler -v 1.17.3
+  - gem install rspec
 install: bundle install --jobs=1 --retry=1
 script:
   - bundle install
