@@ -1,3 +1,4 @@
 source 'https://rubygems.org'
-gem 'rspec-core'
+gem 'active_support'
 gem 'coveralls'
+gem 'rspec-core'
