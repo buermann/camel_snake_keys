@@ -1,5 +1,5 @@
-require 'activesupport/core_ext/hash'
-require 'activesupport/core_ext/string/inflections'
+require 'active_support/core_ext/hash'
+require 'active_support/core_ext/string/inflections'
 
 module CamelSnakeKeys
   [Hash,Array].each do |klass|
