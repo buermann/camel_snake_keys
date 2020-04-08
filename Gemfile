@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 gem 'activesupport'
 gem 'coveralls'
+gem 'hashie'
 gem 'rspec'
 gem 'rspec-core'
