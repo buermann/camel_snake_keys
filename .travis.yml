@@ -9,10 +9,10 @@ script:
 
 rvm:
   - 2.3.1
-  - 2.4.0
-  - 2.5.0
-  - ruby-head
-  - jruby-head
+#  - 2.4.0
+#  - 2.5.0
+#  - ruby-head
+#  - jruby-head
 
 matrix:
   allow_failures:
