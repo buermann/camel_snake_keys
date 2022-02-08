@@ -35,14 +35,14 @@ RSpec.describe Enumerable do
       hash.should eq camelized
     end
 
-    it "should preserve symbol keys" do 
+    it "should preserve symbol keys" do
       camelized.with_snake_keys[:foo_bar].should_not be_nil
       camelized.with_snake_keys['foo_bar'].should be_nil
       snaked.with_camel_keys[:fooBar].should be_present
       snaked.with_camel_keys['fooBar'].should be_nil
     end
 
-    it "should preserve string keys" do 
+    it "should preserve string keys" do
       camelized.with_snake_keys['dark_matter'].should be_present
       camelized.with_snake_keys[:dark_matter].should be_nil
       snaked.with_camel_keys['darkMatter'].should be_present
@@ -65,7 +65,7 @@ RSpec.describe Enumerable do
 
   end
 
-  context "hashes with indifferent access" do 
+  context "hashes with indifferent access" do
     let(:snaked) { {1.2=>1, 1=>1.2, nil=>2, :foo_bar=>1, "dark_matter"=>[{:dark_energy=>"aBc", "baz_qux"=>"Frob."}]}.with_indifferent_access }
     let(:camelized) { { 1.2=>1, 1=>1.2, nil=>2, :fooBar=>1, "darkMatter"=>[{:darkEnergy=>"aBc", "bazQux"=>"Frob."}]}.with_indifferent_access }
 
@@ -95,7 +95,7 @@ RSpec.describe Enumerable do
 
   end
 
-  context "mashes" do 
+  context "mashes" do
     let(:snaked) { Hashie::Mash.new({1.2=>1, 1=>1.2, nil=>2, :foo_bar=>1, "dark_matter"=>[{:dark_energy=>"aBc", "baz_qux"=>"Frob."}]}) }
     let(:camelized) { Hashie::Mash.new({ 1.2=>1, 1=>1.2, nil=>2, :fooBar=>1, "darkMatter"=>[{:darkEnergy=>"aBc", "bazQux"=>"Frob."}]}) }
 
@@ -112,7 +112,7 @@ RSpec.describe Enumerable do
       hash.should eq camelized
       hash["foo_bar"].should eq hash[:foo_bar]
     end
- 
+
     it "should snake case keys of hashes with redundant indifference" do
       hash = camelized.with_snake_keys(true)
       hash.class.should eq Hashie::Mash
@@ -126,7 +126,7 @@ RSpec.describe Enumerable do
       hash.should eq camelized
       hash["foo_bar"].should eq hash[:foo_bar]
     end
- 
+
   end
 
   context "hash merge conflicts should be resolved predictably" do
@@ -152,26 +152,26 @@ RSpec.describe Enumerable do
   context "it should pass indifference down deeply nested structures" do
     it "camelizing an array of hashes" do
       camelized = [ a: { b: [{c: :d}] } ].with_camel_keys(true)
-      camelized.first[:a].kind_of?(HashWithIndifferentAccess).should be_truthy
-      camelized.first[:a][:b].first.kind_of?(HashWithIndifferentAccess).should be_truthy
+      camelized.first[:a].is_a?(HashWithIndifferentAccess).should be_truthy
+      camelized.first[:a][:b].first.is_a?(HashWithIndifferentAccess).should be_truthy
     end
 
     it "cazemlizing a hashes of arrays" do
       camelized = { a: [{b: {c: :d}}]}.with_camel_keys(true)
-      camelized.kind_of?(HashWithIndifferentAccess).should be_truthy
-      camelized[:a].first[:b].kind_of?(HashWithIndifferentAccess).should be_truthy
+      camelized.is_a?(HashWithIndifferentAccess).should be_truthy
+      camelized[:a].first[:b].is_a?(HashWithIndifferentAccess).should be_truthy
     end
 
     it "snaking an array of hashes" do
       snaked = [ a: { b: [{c: :d}] } ].with_snake_keys(true)
-      snaked.first[:a].kind_of?(HashWithIndifferentAccess).should be_truthy
-      snaked.first[:a][:b].first.kind_of?(HashWithIndifferentAccess).should be_truthy
+      snaked.first[:a].is_a?(HashWithIndifferentAccess).should be_truthy
+      snaked.first[:a][:b].first.is_a?(HashWithIndifferentAccess).should be_truthy
     end
 
     it "snaking a hashes of arrays" do
       snaked = { a: [{b: {c: :d}}]}.with_snake_keys(true)
-      snaked.kind_of?(HashWithIndifferentAccess).should be_truthy
-      snaked[:a].first[:b].kind_of?(HashWithIndifferentAccess).should be_truthy
+      snaked.is_a?(HashWithIndifferentAccess).should be_truthy
+      snaked[:a].first[:b].is_a?(HashWithIndifferentAccess).should be_truthy
     end
 
   end

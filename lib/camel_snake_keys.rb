@@ -1,8 +1,8 @@
-require 'active_support/core_ext/hash'
-require 'active_support/core_ext/string/inflections'
+require 'active_support'
+require 'active_support/core_ext'
 
 module CamelSnakeKeys
-  [Hash,Array].each do |klass|
+  [Hash, Array].each do |klass|
     refine klass do
       def with_camel_keys(indifference=false)
         CamelSnakeKeys.camel_keys(self, indifference)
@@ -15,50 +15,52 @@ module CamelSnakeKeys
   end
 
   class << self
-    def if_underscore(v)
-      if v.is_a? Symbol
-        v.to_s.underscore.to_sym
-      elsif v.is_a? String
-        v.underscore
+    def if_underscore(obj)
+      case obj
+      when Symbol
+        obj.to_s.underscore.to_sym
+      when String
+        obj.underscore
       else
-        v
+        obj
       end
     end
 
-    def if_camelize(v)
-      if v.is_a? Symbol
-        v.to_s.camelize(:lower).to_sym
-      elsif v.is_a? String
-        v.camelize(:lower)
+    def if_camelize(obj)
+      case obj
+      when Symbol
+        obj.to_s.camelize(:lower).to_sym
+      when String
+        obj.camelize(:lower)
       else
-        v
+        obj
       end
     end
 
     def snake_keys(data, indifference=false)
-      if data.kind_of? Array
+      case data
+      when Array
         data.map { |v| snake_keys(v, indifference) }
-      elsif data.kind_of? Hash
-        hash = Hash[data.sort_by {|k,_v| k =~ /_/ ? 0 : 1 }.map {|k, v| [if_underscore(k), snake_keys(v, indifference)] }]
+      when Hash
+        hash = data.sort_by {|k, _v| k =~ /_/ ? 0 : 1 }.map {|k, v| [if_underscore(k), snake_keys(v, indifference)] }.to_h
         hash = hash.with_indifferent_access if indifference
-        data.class == Hash ? hash : data.class.new(hash)
+        data.instance_of?(Hash) ? hash : data.class.new(hash)
       else
         data
       end
     end
 
     def camel_keys(data, indifference=false)
-      if data.kind_of? Array
+      case data
+      when Array
         data.map { |v| camel_keys(v, indifference) }
-      elsif data.kind_of? Hash
-        hash = Hash[data.sort_by {|k,_v| k =~ /_/ ? 1 : 0 }.map {|k, v| [if_camelize(k), camel_keys(v, indifference)] }]
+      when Hash
+        hash = data.sort_by {|k, _v| k =~ /_/ ? 1 : 0 }.map {|k, v| [if_camelize(k), camel_keys(v, indifference)] }.to_h
         hash = hash.with_indifferent_access if indifference
-        data.class == Hash ? hash : data.class.new(hash)
+        data.instance_of?(Hash) ? hash : data.class.new(hash)
       else
         data
       end
     end
   end
 end
-
-
