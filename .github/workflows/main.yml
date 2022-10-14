@@ -70,6 +70,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1
+      - name: Rspec
         with:
           ruby-version: 2.7.3
           bundler-cache: true
