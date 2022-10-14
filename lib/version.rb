@@ -1,5 +1,5 @@
 module CamelSnakeKeys
-  VERSION = '0.0.7'.freeze
+  VERSION = '0.1.0'.freeze
 
   def self.version
     VERSION

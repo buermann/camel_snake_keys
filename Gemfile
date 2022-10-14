@@ -1,4 +1,7 @@
 source 'https://rubygems.org'
+gemspec
+gem 'brakeman'
+gem 'byebug'
 gem 'activesupport'
 gem 'coveralls'
 gem 'hashie'

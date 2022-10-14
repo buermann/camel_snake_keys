@@ -1,5 +1,7 @@
 require 'test_helper'
+require 'byebug'
 require 'hashie/mash'
+require 'active_support/core_ext/hash/indifferent_access'
 
 using CamelSnakeKeys
 
@@ -50,14 +52,14 @@ RSpec.describe Enumerable do
     end
 
     it "should snake case keys of hashes with indifference" do
-      hash = camelized.with_snake_keys(true)
+      hash = camelized.with_indifferent_access.with_snake_keys
       hash.class.should eq HashWithIndifferentAccess
       hash.should eq snaked.with_indifferent_access
       hash[:foo_bar].should eq hash["foo_bar"]
     end
 
     it "should camel case keys of hashes with indifference" do
-      hash = snaked.with_camel_keys(true)
+      hash = snaked.with_indifferent_access.with_camel_keys
       hash.class.should eq HashWithIndifferentAccess
       hash.should eq camelized.with_indifferent_access
       hash["fooBar"].should eq hash[:fooBar]
@@ -82,13 +84,13 @@ RSpec.describe Enumerable do
     end
 
     it "should snake case keys of hashes with indifference" do
-      hash = camelized.with_snake_keys(true)
+      hash = camelized.with_indifferent_access.with_snake_keys
       hash.class.should eq HashWithIndifferentAccess
       hash.should eq snaked
     end
 
     it "should camel case keys of hashes with indifference" do
-      hash = snaked.with_camel_keys(true)
+      hash = snaked.with_indifferent_access.with_camel_keys
       hash.class.should eq HashWithIndifferentAccess
       hash.should eq camelized
     end
@@ -114,14 +116,14 @@ RSpec.describe Enumerable do
     end
 
     it "should snake case keys of hashes with redundant indifference" do
-      hash = camelized.with_snake_keys(true)
+      hash = Hashie::Mash.new(camelized.with_snake_keys.with_indifferent_access)
       hash.class.should eq Hashie::Mash
       hash.should eq snaked
       hash["foo_bar"].should eq hash[:foo_bar]
     end
 
     it "should camel case keys of hashes with redundant indifference" do
-      hash = snaked.with_camel_keys(true)
+      hash = Hashie::Mash.new(snaked.with_camel_keys.with_indifferent_access)
       hash.class.should eq Hashie::Mash
       hash.should eq camelized
       hash["foo_bar"].should eq hash[:foo_bar]
@@ -140,8 +142,9 @@ RSpec.describe Enumerable do
     end
 
     it "should give snake case key values priority when camel casing" do
-      hash   = { foo_bar: 1, fooBar: 2 }
       result = { fooBar: 1 }
+
+      hash   = { foo_bar: 1, fooBar: 2 }
       hash.with_camel_keys.should eq result
 
       hash = { fooBar: 2, foo_bar: 1 }
@@ -151,28 +154,27 @@ RSpec.describe Enumerable do
 
   context "it should pass indifference down deeply nested structures" do
     it "camelizing an array of hashes" do
-      camelized = [ a: { b: [{c: :d}] } ].with_camel_keys(true)
+      camelized = [ a: { b: [{c: :d}] } ].with_camel_keys.map(&:with_indifferent_access)
       camelized.first[:a].is_a?(HashWithIndifferentAccess).should be_truthy
       camelized.first[:a][:b].first.is_a?(HashWithIndifferentAccess).should be_truthy
     end
 
     it "cazemlizing a hashes of arrays" do
-      camelized = { a: [{b: {c: :d}}]}.with_camel_keys(true)
+      camelized = { a: [{b: {c: :d}}]}.with_camel_keys.with_indifferent_access
       camelized.is_a?(HashWithIndifferentAccess).should be_truthy
       camelized[:a].first[:b].is_a?(HashWithIndifferentAccess).should be_truthy
     end
 
     it "snaking an array of hashes" do
-      snaked = [ a: { b: [{c: :d}] } ].with_snake_keys(true)
+      snaked = [ a: { b: [{c: :d}] } ].with_snake_keys.map(&:with_indifferent_access)
       snaked.first[:a].is_a?(HashWithIndifferentAccess).should be_truthy
       snaked.first[:a][:b].first.is_a?(HashWithIndifferentAccess).should be_truthy
     end
 
     it "snaking a hashes of arrays" do
-      snaked = { a: [{b: {c: :d}}]}.with_snake_keys(true)
+      snaked = { a: [{b: {c: :d}}]}.with_snake_keys.with_indifferent_access
       snaked.is_a?(HashWithIndifferentAccess).should be_truthy
       snaked[:a].first[:b].is_a?(HashWithIndifferentAccess).should be_truthy
     end
-
   end
 end
