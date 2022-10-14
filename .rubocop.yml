@@ -3,6 +3,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - 'spec/**/*'
+    - 'vendor/**/*'
 
 Metrics/CyclomaticComplexity:
   Max: 12
