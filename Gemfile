@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 gemspec
+gem 'activesupport'
 gem 'brakeman'
 gem 'byebug'
-gem 'activesupport'
 gem 'coveralls'
 gem 'hashie'
 gem 'rake'

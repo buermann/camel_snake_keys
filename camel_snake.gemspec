@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 $LOAD_PATH.push File.expand_path('lib', __dir__)
 
 # Maintain your gem's version:
@@ -14,14 +16,14 @@ Gem::Specification.new do |s|
   s.description = ''
   s.license     = 'MIT'
 
-  s.files         = `git ls-files`.split("\n").sort
-  s.test_files    = `git ls-files -- spec/*`.split("\n")
+  s.files = `git ls-files`.split("\n").sort
 
-  s.required_ruby_version = '> 2.0'
+  s.required_ruby_version = '> 2.3'
   s.add_dependency 'activesupport'
 
-  s.add_development_dependency 'rspec'
-  s.add_development_dependency 'byebug'
-  s.add_development_dependency 'brakeman'
   s.add_development_dependency 'activesupport'
+  s.add_development_dependency 'brakeman'
+  s.add_development_dependency 'byebug'
+  s.add_development_dependency 'rspec'
+  s.metadata['rubygems_mfa_required'] = 'true'
 end
