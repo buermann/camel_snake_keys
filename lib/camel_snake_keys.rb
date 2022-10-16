@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Convert the keys of hashes in nested structures to camel or underscore case.
+# Convert the keys of hashes in nested structures to camel or snake case.
 module CamelSnakeKeys
   [Hash, Array].each do |klass|
     refine klass do
@@ -15,27 +15,26 @@ module CamelSnakeKeys
   end
 
   class << self
-    def camelize(obj)
-      return unless obj
-
-      str = obj.to_s.split(/[-_]+/).map { |w| w[0].upcase! + w[1..-1] }.join
-      str[0].downcase! + str[1..-1]
+    def camelcase(obj)
+      string = +obj.to_s # unfreeze whatever it might be with a leading +
+      string.sub!(/^([A-Z])/) { $1.downcase }
+      string.gsub!(/_([a-z\d])/) { $1.capitalize }
+      string
     end
 
-    def underscore(obj)
-      return unless obj
-
-      obj.to_s.gsub('-', '_').split(/([A-Z])/).map do |syl|
-        syl =~ /^[A-Z]/ ? "_#{syl.downcase!}" : syl
-      end.join.sub(/^_/, '')
+    def snakecase(obj)
+      string = +obj.to_s
+      string.gsub!(/([A-Z])/) { "_#{$1}" }
+      string.downcase!
+      string
     end
 
     def if_underscore(obj)
       case obj
       when Symbol
-        underscore(obj.to_s).to_sym
+        snakecase(obj.to_s).to_sym
       when String
-        underscore(obj)
+        snakecase(obj)
       else
         obj
       end
@@ -44,9 +43,9 @@ module CamelSnakeKeys
     def if_camelize(obj)
       case obj
       when Symbol
-        camelize(obj.to_s).to_sym
+        camelcase(obj.to_s).to_sym
       when String
-        camelize(obj)
+        camelcase(obj)
       else
         obj
       end

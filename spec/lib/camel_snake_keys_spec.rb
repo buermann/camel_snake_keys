@@ -6,6 +6,35 @@ require 'active_support/core_ext/hash/indifferent_access'
 using CamelSnakeKeys
 
 RSpec.describe Enumerable do
+
+  context 'camelize and underscore' do
+    let(:underscore_to_camel) {
+      {
+        "product"                => "product",
+        "special_guest"          => "specialGuest",
+        "application_controller" => "applicationController",
+        "area51_controller"      => "area51Controller",
+        product:                    "product",
+        special_guest:              "specialGuest",
+        application_controller:     "applicationController",
+        area51_controller:          "area51Controller",
+        "camel_snake/keys"       => "camelSnake/keys",
+        "camel_snake::keys"      => "camelSnake::keys"
+      }
+    }
+    it "converts strings and symbols to camel and snake case strings as expected" do
+      underscore_to_camel.each do |k,v|
+        CamelSnakeKeys.camelcase(k).should eq v.to_s
+        CamelSnakeKeys.snakecase(v).should eq k.to_s
+      end
+    end
+
+    it "handles nils gracefully" do
+      CamelSnakeKeys.camelcase(nil).should eq ""
+      CamelSnakeKeys.snakecase(nil).should eq ""
+    end
+  end
+
   context 'arrays' do
     let(:snaked) do
       [[{ true => false, 1 => 1.2, 1.2 => 1, nil => 2, :foo_bar => 1,

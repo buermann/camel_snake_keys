@@ -1,9 +1,11 @@
 0.1.0 10/14/2022
 ================
 
-Re-using ActiveSupport::Inflector's camelize and underscore methods converts "::" to "/" and "/" to "::", which might be useful in Rails' internals, but in the context of a Grape API it corrupts the swagger docs.
+ActiveSupport::Inflector's camelize and underscore methods convert "::" to "/" and "/" to "::", which might be useful in Rails' internals, but in the context of a Grape API it corrupts the swagger docs' "paths" objects.
 
-Implement our own camelize and underscore methods that leave "::" and "/" alone, rather than relying on ActiveSupport.
+Implement our own camel and snake case methods that leave "::" and "/" unmolested, rather than relying on ActiveSupport, in which case we'll drop that dependency altogether by removing the (trivially re-implemented) indifferent access functionality.
+
+We are not re-implmenting ActiveSupport's acronym inflections. Yet.
 
 Replace travis etc. with github actions.
 
