@@ -23,7 +23,8 @@ module CamelSnakeKeys
     end
 
     def snakecase(obj)
-      string = +obj.to_s
+      string    = +obj.to_s
+      string[0] = string[0].downcase if string[0]
       string.gsub!(/([A-Z])/) { "_#{$1}" }
       string.downcase!
       string

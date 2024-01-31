@@ -33,6 +33,11 @@ RSpec.describe Enumerable do
       CamelSnakeKeys.camelcase(nil).should eq ""
       CamelSnakeKeys.snakecase(nil).should eq ""
     end
+
+    it "handles pascal case (destructively)" do
+      CamelSnakeKeys.camelcase("pascal_case").should eq "pascalCase"
+      CamelSnakeKeys.snakecase("PascalCase").should eq "pascal_case"
+    end
   end
 
   context 'arrays' do

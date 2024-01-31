@@ -2,7 +2,7 @@
 
 # Store the version of the gem here rather than the gemspec
 module CamelSnakeKeys
-  VERSION = '1.0.0'
+  VERSION = '1.1.0'
 
   def self.version
     VERSION

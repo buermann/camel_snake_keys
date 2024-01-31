@@ -1,7 +1,11 @@
 1.0.0 01/31/2024
 ================
 
-Don't let integer hash keys raise your enemies up. Test against Ruby 3.3.0.
+Test against Ruby 3.3.0.
+
+Don't let integer hash keys unleashed the bees.
+
+Fix an introduced bug that produces leading underscores when snaking PascalCase.
 
 0.1.0 10/14/2022
 ================
