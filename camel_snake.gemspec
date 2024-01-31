@@ -21,9 +21,5 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '> 2.3'
   s.add_dependency 'activesupport'
 
-  s.add_development_dependency 'activesupport'
-  s.add_development_dependency 'brakeman'
-  s.add_development_dependency 'byebug'
-  s.add_development_dependency 'rspec'
   s.metadata['rubygems_mfa_required'] = 'true'
 end
