@@ -56,7 +56,7 @@ module CamelSnakeKeys
       when Array
         data.map { |v| snake_keys(v) }
       when Hash
-        hash = data.sort_by { |k, _v| k =~ /_/ ? 0 : 1 }.to_h { |k, v| [if_underscore(k), snake_keys(v)] }
+        hash = data.sort_by { |k, _v| k.to_s =~ /_/ ? 0 : 1 }.to_h { |k, v| [if_underscore(k), snake_keys(v)] }
         data.instance_of?(Hash) ? hash : data.class.new(hash)
       else
         data
@@ -68,7 +68,7 @@ module CamelSnakeKeys
       when Array
         data.map { |v| camel_keys(v) }
       when Hash
-        hash = data.sort_by { |k, _v| k =~ /_/ ? 1 : 0 }.to_h { |k, v| [if_camelize(k), camel_keys(v)] }
+        hash = data.sort_by { |k, _v| k.to_s =~ /_/ ? 1 : 0 }.to_h { |k, v| [if_camelize(k), camel_keys(v)] }
         data.instance_of?(Hash) ? hash : data.class.new(hash)
       else
         data
